@@ -1,42 +1,26 @@
-import { Link } from "gatsby"
-import PropTypes from "prop-types"
 import React from "react"
+import { withStyles } from '@material-ui/core/styles';
+import { AppBar, Toolbar } from '@material-ui/core';
+import Image from '../components/image';
 
-const Header = ({ siteTitle }) => (
-  <header
-    style={{
-      background: `rebeccapurple`,
-      marginBottom: `1.45rem`,
-    }}
-  >
-    <div
-      style={{
-        margin: `0 auto`,
-        maxWidth: 960,
-        padding: `1.45rem 1.0875rem`,
-      }}
-    >
-      <h1 style={{ margin: 0 }}>
-        <Link
-          to="/"
-          style={{
-            color: `white`,
-            textDecoration: `none`,
-          }}
-        >
-          {siteTitle}
-        </Link>
-      </h1>
+const styles = {
+  root: {
+    flexGrow: 1,
+    paddingBottom: '10px',
+  },
+  logo: {
+    marginRight: 'auto',
+  },
+};
+
+const Header = ({ classes, siteTitle }) => (
+  <div className={classes.root}>
+      <AppBar position="static">
+        <Toolbar>
+          <Image className={classes.logo}/>
+        </Toolbar>
+      </AppBar>
     </div>
-  </header>
 )
 
-Header.propTypes = {
-  siteTitle: PropTypes.string,
-}
-
-Header.defaultProps = {
-  siteTitle: ``,
-}
-
-export default Header
+export default withStyles(styles)(Header);
