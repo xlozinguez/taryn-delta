@@ -1,4 +1,5 @@
 module.exports = {
+  pathPrefix: "/taryn-delta",
   siteMetadata: {
     title: `Plan Finder`,
     description: `Find the plan tailored to your need using our step by step tool.`,
