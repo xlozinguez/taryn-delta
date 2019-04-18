@@ -15,6 +15,7 @@ import {
   InputAdornment,
   CardMedia,
   CardActions,
+  CardActionArea,
   Collapse,
   CardContent,
   Typography,
@@ -26,25 +27,27 @@ import {
 } from '@material-ui/core';
 import {
   Add,
-  Face,
-  Redeem,
   Remove,
   Search,
   Timer,
   Payment,
   ShowChart
 } from '@material-ui/icons';
+import withRoot from '../withRoot';
 import Layout from "../components/layout";
 import SEO from "../components/seo";
 import DentalHealthImg from '../images/dental-health.svg';
 import firstPlanImg from '../images/theFirst.jpeg';
 import secondPlanImg from '../images/theSecond.jpeg';
 import thirdPlanImg from '../images/theThird.jpeg';
-import withRoot from '../withRoot';
+import happyTooth from '../images/happy-tooth.jpg';
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
+  },
+  stepper: {
+    marginBottom: theme.spacing.unit * 5,
   },
   button: {
     marginRight: theme.spacing.unit,
@@ -104,108 +107,54 @@ const styles = theme => ({
     height: 70,
     overflow: 'visible',
   },
+  happyToothIcon: {
+    height: 250,
+    backgroundSize: 'contain'
+  },
+  signUpCard: {
+    width: '50%',
+    margin: '0 auto',
+    padding: theme.spacing.unit * 5,
+  },
+  signUpButton: {
+    margin: '20px auto 0',
+    display: 'flex'
+  }
 });
 
 const data = [
   {
-    type: 'PPO Plan',
-    name: 'Advantage Gold',
-    monthly: '$43.99',
+    name: 'Enhanced',
+    type: 'PPO Plus Premiere',
     img: firstPlanImg,
     single: true,
-    description: 'Great for people who want the maximum coverage offered',
+    description: 'Great for people who want the maximum coverage offered.',
     details: {
-      dentist: [
-        'Choose any Dentist',
-        'Save up to 35% by choosing an In-Network Dentist'
-      ],
-      benefits: {
-        cleaningXrays: '100%',
-        fillings: '70%',
-        rootCanalsCrowns: '50%',
-        implants: '50%',
-        childBraces: '50%',
-      },
-      waitingPeriods: {
-        cleanings: 'None',
-        fillings: '6 months',
-        majorWork: '12 months',
-      },
-      deductibles: {
-        preventive: '$0 In / $50 Out',
-        other: '$50',
-      },
-      maxBenefits: {
-        firstYears: '$1,000, $1,250, $1,500',
-        implantsLifetime: '$1,000',
-        childBracesAnnual: '$500',
-        childBracesLifetime: '$1,000',
-      }
+      premium: '$58.42',
+      deductible: '$50',
+      annualPlanMax: '$1,000',
     }
   },{
-    type: 'PPO Plan',
-    name: 'Advantage Silver',
-    monthly: '$30.22',
+    name: 'Classic',
+    type: 'PPO Plus Premiere',
     img: secondPlanImg,
     single: true,
-    description: 'Great for people who anticipate needing dental work beyond the occasional filling',
+    description: 'Great for people who anticipate needing more involved dental work.',
     details: {
-      dentist: [
-        'Choose any Dentist',
-        'Save up to 35% by choosing an In-Network Dentist'
-      ],
-      benefits: {
-        cleaningXrays: '80%',
-        fillings: '50%',
-        rootCanalsCrowns: '50%',
-        implants: '50%',
-        childBraces: '0%',
-      },
-      waitingPeriods: {
-        cleanings: 'None',
-        fillings: '6 months',
-        majorWork: '12 months',
-      },
-      deductibles: {
-        preventive: '$0 In / $50 Out',
-        other: '$50',
-      },
-      maxBenefits: {
-        firstYears: '$500, $750, $1,000',
-        implantsLifetime: '$700'
-      }
+      premium: '$45.14',
+      deductible: '$50',
+      annualPlanMax: '$1,000',
     }
   },{
-    type: 'PPO Plan',
-    name: 'Advantage Bronze',
-    monthly: '$22.67',
+    name: 'Clear',
+    type: 'PPO Plus Premiere',
     img: thirdPlanImg,
     single: true,
-    description: 'Great for people who expect to need only cleanings and the occasional filling',
+    description: 'Great for people only needing cleanings and occasional filling.',
     details: {
-      dentist: [
-        'Choose any Dentist',
-        'Save up to 35% by choosing an In-Network Dentist'
-      ],
-      benefits: {
-        cleaningXrays: '100%',
-        fillings: '50%',
-        rootCanalsCrowns: '0%',
-        implants: '0%',
-        childBraces: '0%',
-      },
-      waitingPeriods: {
-        cleanings: 'None',
-        fillings: '6 months',
-        majorWork: 'Not covered',
-      },
-      deductibles: {
-        preventive: '$0 In / $50 Out',
-        other: '$50',
-      },
-      maxBenefits: {
-        firstYears: '$500, $750, $1,000'
-      }
+      premium: '$38.00',
+      deductible: '$0',
+      annualPlanMax: 'None',
     }
   }
 ]
@@ -224,7 +173,7 @@ const IndexPage = ({ classes }) => {
     <Layout>
       <SEO title="Find a Plan" keywords={[`gatsby`, `application`, `react`]} />
       <div className={classes.root}>
-          <Stepper activeStep={activeStep}>
+          <Stepper activeStep={activeStep} className={classes.stepper}>
             {steps.map((label, index) => {
               const props = {};
               const labelProps = {};
@@ -281,27 +230,29 @@ const IndexPage = ({ classes }) => {
                   data.map((plan) => (
                     <Grid item xs={4} key={plan.name}>
                       <Card className={classes.card}>
-                        <CardHeader
-                          avatar={
-                            <Avatar 
-                              aria-label="Dental Health"
-                              className={classes.avatar} 
-                              src={DentalHealthImg}
-                            />
-                          }
-                          title={`${plan.name} - ${plan.type}`}
-                          subheader={`${plan.monthly} Monthly (${plan.single ? 'Single' : 'Family'})`}
-                        />
-                        <CardMedia
-                          className={classes.media}
-                          image={plan.img}
-                          title={plan.name}
-                        />
-                        <CardContent>
-                          <Typography component="p">
-                            {plan.description}
-                          </Typography>
-                        </CardContent>
+                        <CardActionArea onClick={handleNext}>
+                          <CardHeader
+                            avatar={
+                              <Avatar 
+                                aria-label="Dental Health"
+                                className={classes.avatar} 
+                                src={DentalHealthImg}
+                              />
+                            }
+                            title={`${plan.name} - ${plan.type}`}
+                            subheader={`${plan.details.premium} Monthly (${plan.single ? 'Single' : 'Family'})`}
+                          />
+                          <CardMedia
+                            className={classes.media}
+                            image={plan.img}
+                            title={plan.name}
+                          />
+                          <CardContent>
+                            <Typography component="p">
+                              {plan.description}
+                            </Typography>
+                          </CardContent>
+                        </CardActionArea>
                         <CardActions className={classes.actions} disableActionSpacing>
                           { 
                             !expanded &&
@@ -323,46 +274,25 @@ const IndexPage = ({ classes }) => {
                             <List>
                               <ListItem>
                                 <Avatar>
-                                  <Face />
-                                </Avatar>
-                                <ListItemText primary="Dentist" secondary="More here" />
-                              </ListItem>
-                              <Divider variant="inset" component="li" />
-                              <ListItem>
-                                <Avatar>
-                                  <Redeem />
-                                </Avatar>
-                                <ListItemText primary="Redeem" secondary="More here" />
-                              </ListItem>
-                              <Divider variant="inset" component="li" />
-                              <ListItem>
-                                <Avatar>
                                   <Timer />
                                 </Avatar>
-                                <ListItemText primary="Waiting Periods" secondary="More here" />
+                                <ListItemText primary="Monthly Premium" secondary={plan.details.premium} />
                               </ListItem>
                               <Divider variant="inset" component="li" />
                               <ListItem>
                                 <Avatar>
                                   <Payment />
                                 </Avatar>
-                                <ListItemText primary="Deductibles" secondary="More here" />
+                                <ListItemText primary="Deductibles" secondary={plan.details.deductible} />
                               </ListItem>
                               <Divider variant="inset" component="li" />
                               <ListItem>
                                 <Avatar>
                                   <ShowChart />
                                 </Avatar>
-                                <ListItemText primary="Maximum Benefits" secondary="More here" />
+                                <ListItemText primary="Annual Plan Max" secondary={plan.details.annualPlanMax} />
                               </ListItem>
                             </List>
-
-
-                            {/* <Typography variant="h5">Plan Details</Typography>
-                            <Typography variant="h6">Dentist</Typography>
-                            <Typography paragraph>
-                              <ul>{plan.details.dentist.map((info) => (<li>{info}</li>))}</ul>
-                            </Typography> */}
                           </CardContent>
                         </Collapse>
                       </Card>
@@ -370,6 +300,30 @@ const IndexPage = ({ classes }) => {
                   ))
                 }
               </Grid>
+            )
+          }
+          { 
+            activeStep === 2 && (
+              <Card className={classes.signUpCard}>
+                <CardMedia
+                  className={classes.happyToothIcon}
+                  image={happyTooth}
+                  title="Congratulation! Let's sign up!"
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="h2" className={classes.zipParagraph}>
+                    Congratulation! Let's sign you up!
+                  </Typography>
+                  <Button 
+                    variant="outlined" 
+                    color="primary" 
+                    onClick={handleReset}
+                    className={classes.signUpButton}
+                  >
+                    Sign Up!
+                  </Button>
+                </CardContent>
+              </Card>
             )
           }
         </div>
