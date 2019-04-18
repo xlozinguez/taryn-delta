@@ -40,6 +40,7 @@ import DentalHealthImg from '../images/dental-health.svg';
 import firstPlanImg from '../images/theFirst.jpeg';
 import secondPlanImg from '../images/theSecond.jpeg';
 import thirdPlanImg from '../images/theThird.jpeg';
+import withRoot from '../withRoot';
 
 const styles = theme => ({
   root: {
@@ -376,4 +377,4 @@ const IndexPage = ({ classes }) => {
   )
 }
 
-export default withStyles(styles)(IndexPage);
+export default withRoot(withStyles(styles)(IndexPage));
